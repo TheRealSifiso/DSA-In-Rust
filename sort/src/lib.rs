@@ -78,7 +78,7 @@ Partial in this case means there may be instances of your type that
 cannot be meaningfully compared e.g. A String "42" vs a u8 42.
 
 The partial_cmp(...) method returns Option<Ordering>. Therefore, it can
-return None for incomparable instances. 
+return None for incomparable instances.
 
 */
 
@@ -88,8 +88,8 @@ The architecture of this program closely resembles the typical State
 Design pattern - an object oriented behavioural design pattern that
 allows an object to change behaviour when its internal state changes.
 
-"The pattern extracts state-related behaviors into separate state 
-classes and forces the original object to delegate the work to an 
+"The pattern extracts state-related behaviors into separate state
+classes and forces the original object to delegate the work to an
 instance of these classes, instead of acting on its own.
 "
 
@@ -103,5 +103,42 @@ particular trait implementation for each state type."
 */
 
 pub trait Sorter {
-    
+    fn sort<T: Ord>(slice: &mut [T]);
+}
+
+/*
+A free-standing sort() function that is generic over type 'T' that
+implements the 'Ord' trait and 'S' that implements Sorter trait (a
+common trait for all sort types)
+*/
+pub fn sort<T: Ord, S: Sorter>(slice: &mut [T]) {
+    S::sort(slice);
+}
+
+mod bubblesort;
+
+pub use bubblesort::BubbleSort;
+
+#[cfg(test)]
+mod tests {
+
+    use super::*;
+
+    //The Standard Sorter maes use of the sort() method from the std lib
+    struct StdSorter;
+
+    impl Sorter for StdSorter {
+        fn sort<T: Ord>(slice: &mut [T]) {
+            slice.sort();
+        }
+    }
+
+    #[test]
+    fn std_works() {
+        let mut things = vec![9, 8, 3 , 5, 0, 7];
+
+        sort::<_, StdSorter>(&mut things);
+
+        assert_eq!(things, &[0, 3, 5, 7, 8, 9]);
+    }
 }
