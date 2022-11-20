@@ -90,10 +90,14 @@ pub fn sort<T: Ord, S: Sorter>(slice: &mut [T]) {
     S::sort(slice)
 }
 
+mod bubblesort;
+
+pub use bubblesort::BubbleSort;
+
 #[cfg(test)]
 mod tests {
     use super::*;
-
+ 
     struct StdSorter;
 
     impl Sorter for StdSorter {
@@ -106,7 +110,7 @@ mod tests {
     fn std_works() {
         let mut things = vec![9, 8, 3 , 5, 0, 7];
 
-        sort::<_, StdSorter>(&mut things);
+        sort::<_, BubbleSort>(&mut things);
 
         assert_eq!(things, &[0, 3, 5, 7, 8, 9]);
     }
