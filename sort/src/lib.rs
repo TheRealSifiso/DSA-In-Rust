@@ -116,6 +116,7 @@ pub fn sort<T: Ord, S: Sorter>(slice: &mut [T]) {
 }
 
 mod bubblesort;
+mod insertionsort;
 
 pub use bubblesort::BubbleSort;
 
