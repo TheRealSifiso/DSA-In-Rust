@@ -1,12 +1,12 @@
-struct NewType<T>(Vec<T>);
+pub struct NewType<T>(pub Vec<T>);
 
 impl<T> NewType<T> {
-    fn iter(&self) -> NewTypeIter<'_, T>{
+    pub fn iter(&self) -> NewTypeIter<'_, T>{
         NewTypeIter { inner: self, pos: 0 }
     }
 }
 
-struct NewTypeIter<'a, T> {
+pub struct NewTypeIter<'a, T> {
     inner: &'a NewType<T>,
     pos: usize,
 }
