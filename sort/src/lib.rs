@@ -82,6 +82,15 @@ return None for incomparable instances.
 
 */
 
+
+/*
+
+The following link leads to an article that explain std trait incredibly well:
+
+https://www.lurklurk.org/effective-rust/std-traits.html
+
+*/
+
 /*
 
 The architecture of this program closely resembles the typical State
