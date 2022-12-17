@@ -118,12 +118,14 @@ pub trait Sorter {
 
 mod bubblesort;
 mod insertionsort;
+mod selectionsort;
 
 #[cfg(test)]
 mod tests{
     use crate::Sorter;
     use crate::bubblesort::BubbleSort;
     use crate::insertionsort::InsertionSort;
+    use crate::selectionsort::SelectionSort;
 
     struct StdSorter;
 
@@ -169,6 +171,15 @@ mod tests{
         let mut collection = vec![4, 9, 2, 8];
 
         InsertionSort{smart: true}.sort(&mut collection);
+
+        assert_eq!(collection, vec![2, 4, 8, 9]);
+    }
+
+    #[test]
+    fn selectionsort_works(){
+        let mut collection = vec![4, 9, 2, 8];
+
+        SelectionSort.sort(&mut collection);
 
         assert_eq!(collection, vec![2, 4, 8, 9]);
     }
