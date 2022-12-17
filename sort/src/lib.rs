@@ -111,25 +111,9 @@ particular trait implementation for each state type."
 */
 
 pub trait Sorter {
-    fn sort<T>(slice: &mut [T])
+    fn sort<T>(&self, slice: &mut [T])
     where
         T: Ord;
-}
-
-/*
-A free-standing sort() function generic over type 'T', which must
-implement the 'Ord' trait, and type 'S' which implements Sorter trait (a
-common trait for all sort types)
-*/
-
-fn sort<T, S>(slice: &mut [T])
-where
-    T: Ord,
-    S: Sorter,
-{
-
-    S::sort(slice);
-
 }
 
 mod bubblesort;
@@ -138,14 +122,13 @@ mod insertionsort;
 #[cfg(test)]
 mod tests{
     use crate::Sorter;
-    use crate::sort;
     use crate::bubblesort::BubbleSort;
     use crate::insertionsort::InsertionSort;
 
     struct StdSorter;
 
     impl Sorter for StdSorter {
-        fn sort<T>(slice: &mut [T])
+        fn sort<T>(&self, slice: &mut [T])
             where
                 T: Ord {
             
@@ -158,7 +141,7 @@ mod tests{
     fn std_sorter_works() {
         let mut collection = vec![4, 9, 2, 8];
 
-        sort::<_, StdSorter>(&mut collection);
+        StdSorter.sort(&mut collection);
 
         assert_eq!(collection, vec![2, 4, 8, 9]);
     }
@@ -167,16 +150,25 @@ mod tests{
     fn bubblesort_works(){
         let mut collection = vec![4, 9, 2, 8];
 
-        sort::<_, BubbleSort>(&mut collection);
+        BubbleSort.sort(&mut collection);
 
         assert_eq!(collection, vec![2, 4, 8, 9]);
     }
 
     #[test]
-    fn insertionsort_works(){
+    fn dumb_insertionsort_works(){
         let mut collection = vec![4, 9, 2, 8];
 
-        sort::<_, InsertionSort>(&mut collection);
+        InsertionSort{smart: false}.sort(&mut collection);
+
+        assert_eq!(collection, vec![2, 4, 8, 9]);
+    }
+
+    #[test]
+    fn smart_insertionsort_works(){
+        let mut collection = vec![4, 9, 2, 8];
+
+        InsertionSort{smart: true}.sort(&mut collection);
 
         assert_eq!(collection, vec![2, 4, 8, 9]);
     }
