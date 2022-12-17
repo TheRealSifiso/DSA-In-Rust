@@ -1,33 +1,35 @@
 use super::Sorter;
-
 pub struct BubbleSort;
 
 impl Sorter for BubbleSort {
-    fn sort<T: Ord>(slice: &mut [T]) {
-        
+    fn sort<T>(slice: &mut [T])
+    where
+        T: Ord,
+    {
         let mut swapped = true;
 
+        //Quit iterating after the last swop
         while swapped {
-
             swapped = false;
 
-            for i in 0..slice.len() - 1{
-                if slice[i] > slice[i + 1] {
+            //Iterate over the collection and swop consecutive items
+            for i in 0..slice.len() - 1 {
+                if slice[i + 1] < slice[i] {
                     slice.swap(i, i + 1);
                     swapped = true;
                 }
             }
-            
         }
-
     }
 }
 
-#[test]
-fn bubble_sort_works(){
-    let mut things = vec![9, 8, 3 , 5, 0, 7];
-
-    super::sort::<_, BubbleSort>(&mut things);
-    assert_eq!(things, &[0, 3, 5, 7, 8, 9])
-
-}
+/*
+Bubble Sort:
+    -> Iterate over the collection
+	-> Compare consecutive items, then swap them!
+		
+		A sorted partition will then form at the end of the collection,
+		one item at a time.
+	
+	-> Swap
+*/

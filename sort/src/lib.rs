@@ -132,10 +132,13 @@ where
 
 }
 
+mod bubblesort;
+
 #[cfg(test)]
 mod tests{
     use crate::Sorter;
     use crate::sort;
+    use crate::bubblesort::BubbleSort;
 
     struct StdSorter;
 
@@ -148,12 +151,21 @@ mod tests{
 
         }
     }
-
+    
     #[test]
     fn std_sorter_works() {
         let mut collection = vec![4, 9, 2, 8];
 
         sort::<_, StdSorter>(&mut collection);
+
+        assert_eq!(collection, vec![2, 4, 8, 9]);
+    }
+
+    #[test]
+    fn bubblesort_works(){
+        let mut collection = vec![4, 9, 2, 8];
+
+        sort::<_, BubbleSort>(&mut collection);
 
         assert_eq!(collection, vec![2, 4, 8, 9]);
     }
