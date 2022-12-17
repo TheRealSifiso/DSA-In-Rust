@@ -1,4 +1,4 @@
-$ Bubble Sort:
+$ Insertion Sort:
 	-> Iterate over the collection
 	-> Compare consecutive items, then swap them!
 		
