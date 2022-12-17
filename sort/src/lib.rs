@@ -82,7 +82,6 @@ return None for incomparable instances.
 
 */
 
-
 /*
 
 The following link leads to an article that explain std trait incredibly well:
@@ -112,44 +111,50 @@ particular trait implementation for each state type."
 */
 
 pub trait Sorter {
-    fn sort<T: Ord>(slice: &mut [T]);
+    fn sort<T>(slice: &mut [T])
+    where
+        T: Ord;
 }
 
 /*
-A free-standing sort() function that is generic over type 'T' that
-implements the 'Ord' trait and 'S' that implements Sorter trait (a
+A free-standing sort() function generic over type 'T', which must
+implement the 'Ord' trait, and type 'S' which implements Sorter trait (a
 common trait for all sort types)
 */
-pub fn sort<T: Ord, S: Sorter>(slice: &mut [T]) {
+
+fn sort<T, S>(slice: &mut [T])
+where
+    T: Ord,
+    S: Sorter,
+{
+
     S::sort(slice);
+
 }
 
-mod bubblesort;
-mod insertionsort;
-mod selectionsort;
-
-pub use bubblesort::BubbleSort;
-
 #[cfg(test)]
-mod tests {
+mod tests{
+    use crate::Sorter;
+    use crate::sort;
 
-    use super::*;
-
-    //The Standard Sorter maes use of the sort() method from the std lib
     struct StdSorter;
 
     impl Sorter for StdSorter {
-        fn sort<T: Ord>(slice: &mut [T]) {
-            slice.sort();
+        fn sort<T>(slice: &mut [T])
+            where
+                T: Ord {
+            
+                    slice.sort();
+
         }
     }
 
     #[test]
-    fn std_works() {
-        let mut things = vec![9, 8, 3 , 5, 0, 7];
+    fn std_sorter_works() {
+        let mut collection = vec![4, 9, 2, 8];
 
-        sort::<_, StdSorter>(&mut things);
+        sort::<_, StdSorter>(&mut collection);
 
-        assert_eq!(things, &[0, 3, 5, 7, 8, 9]);
+        assert_eq!(collection, vec![2, 4, 8, 9]);
     }
 }
