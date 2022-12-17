@@ -16,3 +16,14 @@ impl Sorter for InsertionSort {
         }
     }
 }
+
+/*
+Insertion Sort:
+    -> Iterate over the collection
+	-> Compare each item to all items before it
+	-> If the item is in the wrong position, move it back to insert it into
+		the correct position
+		
+		A sorted partition will then form at the start of the collection,
+		one item at a time
+*/
