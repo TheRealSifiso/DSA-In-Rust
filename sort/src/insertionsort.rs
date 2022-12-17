@@ -10,7 +10,6 @@ impl Sorter for InsertionSort {
         T: Ord,
     {
         for unsorted in 1..slice.len() {
-
             if !self.smart {
                 let mut i = unsorted;
 
@@ -19,6 +18,15 @@ impl Sorter for InsertionSort {
                     i -= 1;
                 }
             } else {
+                /*
+                Binary searches this slice for a given element. This behaves similarly to contains if this slice is sorted.
+
+                If the value is found then Result::Ok is returned, containing the index of the matching element. If there
+                are multiple matches, then any one of the matches could be returned. The index is chosen deterministically,
+                but is subject to change in future versions of Rust. If the value is not found then Result::Err is returned,
+                containing the index where a matching element could be inserted while maintaining sorted order.
+                */
+
                 let index = match slice[..unsorted].binary_search(&slice[unsorted]) {
                     Ok(index) => index,
                     Err(index) => index,
@@ -26,7 +34,7 @@ impl Sorter for InsertionSort {
 
                 //unsorted = the index of the element we want to insert.
                 slice[index..=unsorted].rotate_right(1); //Rotating this chosen subslice swops elements at index 'i' and index 'unsorted'
-                
+
                 //rotate_right(k) shifts all elements to the 'right' by 'k' number of steps whilst wrapping arround
                 //e.g. [1, 2, 3, 4, 5].rotate_right(1) -> [5, 1, 2, 3, 4]
                 //e.g. [1, 2, 3, 4, 5].rotate_right(2) -> [4, 5, 1, 2, 3]
