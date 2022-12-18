@@ -1,1 +1,1 @@
-C:\Users\Sifiso\Documents\DSA-In-Rust\sort\target\debug\libsort.rlib: C:\Users\Sifiso\Documents\DSA-In-Rust\sort\src\lib.rs
+C:\Users\Sifiso\Documents\DSA-In-Rust\sort\target\debug\libsort.rlib: C:\Users\Sifiso\Documents\DSA-In-Rust\sort\src\bubblesort.rs C:\Users\Sifiso\Documents\DSA-In-Rust\sort\src\insertionsort.rs C:\Users\Sifiso\Documents\DSA-In-Rust\sort\src\lib.rs C:\Users\Sifiso\Documents\DSA-In-Rust\sort\src\selectionsort.rs
